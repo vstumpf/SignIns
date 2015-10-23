@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 public class SignIns {
 
    
-   public static final String FILENAME = "points.txt";
+   public static final String FILENAME = "points2.txt";
    public static PersonList persons;
    public static void onStartup() throws IOException, ClassNotFoundException {
       
@@ -30,6 +31,10 @@ public class SignIns {
          } catch (EOFException e) {
             System.out.println("no list in file");
             persons = new PersonList();
+         } catch (InvalidClassException e) {
+            System.out.println("Class is invalid, undo edits.");
+            fis.close();
+            System.exit(1);
          }
          fis.close();
       } else {
@@ -65,11 +70,20 @@ public class SignIns {
    
    public static int scanPoints(Scanner sc) {
       System.out.println("HOW MANY POINTS IS THIS EVENT WORTH?");
-      while (!sc.hasNextInt()) {
-         System.out.println("Not an integer. Enter an integer");
-         sc.nextLine();
-      }
-      int p = sc.nextInt();
+      boolean pos = false;
+      int p = 0;
+      while (!pos) {
+         while (!sc.hasNextInt()) {
+            System.out.println("Not an integer. Enter a positive integer");
+            sc.nextLine();
+         }
+         p = sc.nextInt();
+         if (p < 0) {
+            System.out.println("No Negative Numbers");
+         } else {
+            pos = true;
+         }
+      }  
       return p;
    }
    
@@ -129,5 +143,6 @@ public class SignIns {
          p.addPoints(points);
          System.out.println("Thanks " + p.getName() + "! You now have " + p.getPoints() + " points!");
       }
+      persons.printAll();
    }
 }
