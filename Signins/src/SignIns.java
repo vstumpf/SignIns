@@ -62,15 +62,6 @@ public class SignIns {
       }
    }
    
-   public static void main2(String[] args) {
-      String s = "%2015001341086^STUDENT?;6278561535502085?";
-      int i = whichInput(s);
-      System.out.println(i);
-      System.out.println(whichInput("Vincent Stumpf"));
-      System.out.println(Long.parseLong(s.split("\\;|\\?")[2]));
-
-            
-   }
    
    public static int scanPoints(Scanner sc) {
       System.out.println("HOW MANY POINTS IS THIS EVENT WORTH?");
