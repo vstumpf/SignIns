@@ -1,8 +1,8 @@
 import java.io.Serializable;
 
 
-@SuppressWarnings("serial")
 public class Person implements Serializable{
+   private static final long serialVersionUID = 1L;
    private long ISO;
    private int points = 0;
    private String name;
@@ -30,6 +30,10 @@ public class Person implements Serializable{
    
    public int getPoints() {
       return points;
+   }
+   
+   public String toString() {
+      return name + ": " + points;
    }
    
 }

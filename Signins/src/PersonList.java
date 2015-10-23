@@ -51,4 +51,10 @@ public class PersonList implements Serializable {
       persons.add(p);
    }
    
+   public void printAll() {
+      for (Person p : persons) {
+         System.out.println(p);
+      }
+   }
+   
 }
