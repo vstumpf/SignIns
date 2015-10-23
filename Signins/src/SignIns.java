@@ -139,6 +139,6 @@ public class SignIns {
          System.out.println("Thanks " + p.getName() + "! You now have " + p.getPoints() + " points!");
       }
          
-      
+      System.out.println("BYE!!");
    }
 }
