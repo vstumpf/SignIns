@@ -18,7 +18,7 @@ public class SignIns {
       File file = new File(FILENAME);
       boolean exist = true;
       try {
-         if (file.createNewFile()) exist = true;
+         if (file.createNewFile()) exist = false;
       } catch (IOException e) {}
       
       if (exist) {
