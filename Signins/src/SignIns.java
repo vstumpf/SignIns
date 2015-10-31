@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class SignIns {
 
    
-   public static final String FILENAME = "points2.txt";
+   public static final String FILENAME = "points4.txt";
    public static PersonList persons;
    public static void onStartup() throws IOException, ClassNotFoundException {
       
@@ -104,7 +104,7 @@ public class SignIns {
       long ISO;
       String name;
       Person p = null;
-      while (!(temp = sc.nextLine()).equalsIgnoreCase("q") && !temp.equalsIgnoreCase("quit")) {
+      while (sc.hasNextLine() && !(temp = sc.nextLine()).equalsIgnoreCase("q") && !temp.equalsIgnoreCase("quit")) {
          int type = whichInput(temp);
          if (type < 0) {
             // ERROR

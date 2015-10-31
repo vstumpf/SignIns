@@ -1,9 +1,10 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 @SuppressWarnings("serial")
-public class PersonList implements Serializable {
+public class PersonList implements Serializable, Iterable<Person> {
    public ArrayList<Person> persons;
    public PersonList() {
       persons = new ArrayList<Person>();
@@ -35,6 +36,10 @@ public class PersonList implements Serializable {
          if (p.getISO() == l) return p;
       }
       return null;
+   }
+   
+   public Iterator<Person> iterator() {
+      return persons.iterator();
    }
    
    public long getTempISO() {
