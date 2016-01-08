@@ -2,18 +2,24 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+import org.json.simple.*;
 
 public class SignIns {
 
    
-   public static final String FILENAME = "points4.txt";
+   public static final String FILENAME = "points5.txt";
+   public static final String NEWFILE = "/Users/Vincent/Documents/points5.json";
+   public static JSONObject persons2;
    public static PersonList persons;
+   
+   
    public static void onStartup() throws IOException, ClassNotFoundException {
       
       File file = new File(FILENAME);
@@ -37,18 +43,36 @@ public class SignIns {
             System.exit(1);
          }
          fis.close();
+         
+         
+         
       } else {
          persons = new PersonList();
       }
+      
+      
+      
    }
    
    public static void onClose() throws IOException {
+	   JSONObject obj = new JSONObject();
+	   for (Person p : persons) {
+		   JSONObject pj = new JSONObject();
+		   pj.put("iso",  p.getISO());
+		   pj.put("points",  p.getPoints());
+		   obj.put(p.getName(), pj);
+	   }
+	  
       File file = new File(FILENAME);
       FileOutputStream fos = new FileOutputStream(file);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(persons);
       oos.close();
       fos.close();
+      
+      try (FileWriter file2 = new FileWriter(NEWFILE)) {
+    	  file2.write(obj.toJSONString());
+      }
    }
    
    public static void main(String[] args) {
@@ -90,7 +114,8 @@ public class SignIns {
    public static int whichInput(String s) {
       if (s.matches("^[\\w[\\s]]*$"))
          return 1; // NAME
-      if (s.matches("^%.*\\?\\;\\d*\\??"))
+      //%2015027168939^STUDENT?;6278561939009265?+E?
+      if (s.matches("^%.*\\?\\;\\d*\\??") || s.matches("^%.*\\?\\;\\d*\\?\\+E\\??"))
          return 2; // ID
       return -1; //WRONG INPUT
    }
